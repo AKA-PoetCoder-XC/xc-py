@@ -1,5 +1,6 @@
 from google import genai
 from google.genai.types import Content
+import json
 
 def chat_demo():
     # 初始化API客户端
@@ -20,12 +21,16 @@ def chat_demo():
             break
         
         try:
-            # 发送消息并获取回复
-            response = chat_session.send_message(user_input)
-            
+            # 发送消息并获取回复 返回流式响应
+            # response = chat_session.send_message_stream(user_input)
             # 获取AI回复
-            ai_response = response.text
-            print(f"\nGemini: {ai_response}")
+            # for chunk in response:
+            #     print(chunk.text, end="", flush=True)  # 实时输出每一个chunk的text
+
+            # 发送消息并获取回复 返回文本响应
+            response = chat_session.send_message(user_input)
+            # 获取AI回复
+            print(f"\nGemini: {response.text}")
             
         except Exception as e:
             print(f"\n发生错误: {str(e)}")
