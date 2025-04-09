@@ -14,7 +14,7 @@ def read_excel() -> list:
         df['shopCode'] = df['shopCode'].apply(lambda x: x.zfill(5))
     
     json_data = df.to_json(orient='records', force_ascii=False) # 将读取到的数据转换为json格式
-    return json.loads(json_data)
+    return json.loads(json_data if json_data else "[]") # 将json格式的数据转换为list格式
     
 
 if __name__ == "__main__":

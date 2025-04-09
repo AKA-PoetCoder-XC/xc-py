@@ -64,7 +64,7 @@ def local_api_test():
 def read_excel_import_to_api():
     excel_data_json = pandas_demo.read_excel()
     url = "https://manage.jiayihn.com/api/manage/locasys-point-manage/batch-import-point"
-    params=json.loads(excel_data_json)
+    params=excel_data_json
     headers = {
         'Authorization': 'e5rS9gUDUFSggoHb0Yi0TKR257JtTMMKM1eNp8bY4w1Fvk3xUq7XYPZiangbCZGZo3BjofPnhCsjy1EkK36YB3a6h14whg7fxX78Cw3gBie0acbrkiBQnWKJgS60ucxN',
         'Content-Type': 'application/json'

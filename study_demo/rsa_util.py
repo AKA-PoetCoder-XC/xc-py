@@ -10,7 +10,8 @@ def sign_message(private_key_pem: str, message: bytes) -> str:
         password=None,
         backend=default_backend()
     )
-    
+    # 确保是RSA密钥类型
+    assert isinstance(private_key, rsa.RSAPrivateKey)
     signature = private_key.sign(
         message,
         padding.PKCS1v15(),
