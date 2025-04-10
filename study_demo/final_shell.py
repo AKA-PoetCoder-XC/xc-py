@@ -1,5 +1,10 @@
+'''
+    脚本功能: 破解 FinalShell 3.9.6 及以上版本的注册码 生成器
+    脚本版本: 1.0
+    脚本作者: XieChen
+'''
 from hashlib import md5, sha3_384
-from crypto.Hash import keccak
+from Crypto.Hash import keccak
 
 def md5_hash(msg):
     return md5(msg.encode()).hexdigest()
