@@ -6,6 +6,12 @@ from cryptography.hazmat.backends import default_backend
 import base64
 import time
 
+'''
+根据私钥和字符串生成签名
+
+author: XieChen
+data: 2025-04-12
+'''
 def sign_message(private_key_pem: str, message: bytes) -> str:
     private_key = load_pem_private_key(
         private_key_pem.encode(),
@@ -21,6 +27,12 @@ def sign_message(private_key_pem: str, message: bytes) -> str:
     )
     return base64.b64encode(signature).decode()
 
+'''
+根据请求数据、私钥、商户号生成请求体
+
+author: XieChen
+data: 2025-04-12
+'''
 def build_request_body(data, private_key_pem: str, merchant_id: str, timestamp: int = (int(time.time() * 1000))):
     # 拼接初始化请求参数
     params = {
@@ -38,3 +50,14 @@ def build_request_body(data, private_key_pem: str, merchant_id: str, timestamp: 
 
     # 将请求参数转字符串去除空格后转json对象返回
     return json.loads(json.dumps(params, ensure_ascii=False).replace(" ", ""))
+
+'''
+下划线转驼峰命名
+
+author: XieChen
+data: 2025-04-12
+'''
+def underscore_to_camel(name: str) -> str:
+    """下划线转驼峰命名"""
+    parts = name.split('_')
+    return parts[0] + ''.join(x.capitalize() for x in parts[1:])
