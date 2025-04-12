@@ -14,11 +14,6 @@ D/h/4PpIqpaDclkVO7I+XB3NZl+oGhUCIQDJc+QHJlkkF0LtkoSqUznF5lpSVRKV
 wlyxBHIwk/tzrA==
 -----END RSA PRIVATE KEY-----"""
 
-def underscore_to_camel(name: str) -> str:
-    """下划线转驼峰命名"""
-    parts = name.split('_')
-    return parts[0] + ''.join(x.capitalize() for x in parts[1:])
-
 if __name__ == '__main__':
 
     # 构建请求参数
@@ -44,7 +39,7 @@ if __name__ == '__main__':
     # 下划线转驼峰
     camel_data = [
         {
-            underscore_to_camel(k): v
+            xjy_rsa_util.underscore_to_camel(k): v
             for k, v in item.items() # 遍历每个字典的键值对
         }
         for item in data
