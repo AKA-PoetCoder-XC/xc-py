@@ -50,16 +50,21 @@ def read_excel_import_to_api():
 # 发送请求
 def send_request(data):
     current_timestamp = int(time.time() * 1000)
+    # 拼接请求参数
     params = {
         "merchantId": "10004",
         "timeStamp": current_timestamp,
         "params": data
     }
+    # 对params转json字符串并进行签名
     params_json_string = json.dumps(params, ensure_ascii=False).replace(" ", "") # ensure_ascii=False表示不转换为ascii码，replace(" ", "")表示去掉空格
     print(params_json_string)
+    # 签名
     signature=rsa_util.sign_message(private_key_pem, params_json_string.encode())
+    # 签名后添加到params中
     params["sign"]=signature
     print(signature)
+    # 发送请求
     response = requests.post(url, json=json.loads(json.dumps(params, ensure_ascii=False).replace(" ", "")), verify=False) # verify=False表示忽略SSL证书验证
     return response.text
 
@@ -71,3 +76,9 @@ if __name__ == "__main__":
     print("start!")
     # get_token()
     read_excel_import_to_api()
+
+    # 测试签名
+    message = "hello world".encode()
+    print(f'message: {message}')
+    signature = rsa_util.sign_message(private_key_pem, message)
+    print(f'signature: {signature}')

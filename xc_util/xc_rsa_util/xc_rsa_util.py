@@ -38,3 +38,6 @@ def build_request_body(data, private_key_pem: str, merchant_id: str, timestamp: 
 
     # 将请求参数转字符串去除空格后转json对象返回
     return json.loads(json.dumps(params, ensure_ascii=False).replace(" ", ""))
+
+def rsa_util():
+    print("rsa_util")
