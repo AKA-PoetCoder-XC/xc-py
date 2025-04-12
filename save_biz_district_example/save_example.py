@@ -23,16 +23,16 @@ if __name__ == '__main__':
             "district_code": "430103",
             "location": "112.969029,28.193397;112.96895,28.192156;112.970008,28.192081;112.970273,28.193261;112.969029,28.193397",
             "passenger_flow": "10000",
-            "unit_passenger_flow": "5000.5",
-            "level_sort": "S"
+            "unint_passenger_flow": "5000.5",
+            "level": "S"
         },
         {
             "business_district_name": "测试商圈2",
             "district_code": "430103",
             "location": "112.976346,28.186487;112.976348,28.183704;112.979951,28.183463;112.980165,28.185817;112.979006,28.185817;112.978126,28.185999;112.976501,28.186639;112.976346,28.186487",
             "passenger_flow": "5000",
-            "unit_passenger_flow": "500.5",
-            "level_sort": "A"
+            "unint_passenger_flow": "500.5",
+            "level": "A"
         }
     ]
 
@@ -40,9 +40,9 @@ if __name__ == '__main__':
     camel_data = [
         {
             xjy_rsa_util.underscore_to_camel(k): v
-            for k, v in item.items() # 遍历每个字典的键值对
+            for k, v in item.items() # 遍历每个字典对象的键值对
         }
-        for item in data
+        for item in data # 遍历列表中的每个字典对象
     ]
 
     # 构建请求体
