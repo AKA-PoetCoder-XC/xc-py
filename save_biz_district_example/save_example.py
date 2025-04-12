@@ -1,9 +1,14 @@
 import requests
 import xjy_rsa_util
 
+# 请求地址,正式环境要改成去掉"dev-"前缀
 url = "http://dev-openapi.jiayihn.com/api/open/locasys-new-shop/save-batch-for-open"
+
+# 调用方id，由xjy开放平台提供
 merchant_id = "10004"
-private_key_pem = """-----BEGIN RSA PRIVATE KEY-----
+
+# 调用方私钥
+private_key_pem = """-----BEGIN PRIVATE KEY-----
 MIIBVgIBADANBgkqhkiG9w0BAQEFAASCAUAwggE8AgEAAkEA3JYFhoFtJPR+xoAx
 axWcJIzGGuTAN5a2KN4NJVmOd9tRTiGhqkU/XNL0vE6lU5jXgJLVQGOt3P4CJBC6
 UhLPjwIDAQABAkEAnS49c7HH/xxFNdbk3+Q/JgA1rbYwjavT010eyu18ykPnixS8
@@ -12,9 +17,26 @@ mDTVOb4bvUwBPRZzh3d9AiEA7Wb1aSRWvUFuf0lYCKdMrwBUREZcfHMa4k5QUF0z
 yPsCIQDAGTcgJee4kvq/JwYbTTUDDlqfuF/Ur1RWEF4ERrLthQIgWj+zt766wsOn
 D/h/4PpIqpaDclkVO7I+XB3NZl+oGhUCIQDJc+QHJlkkF0LtkoSqUznF5lpSVRKV
 wlyxBHIwk/tzrA==
------END RSA PRIVATE KEY-----"""
+-----END PRIVATE KEY-----"""
 
 if __name__ == '__main__':
+
+    private_key_pem = """-----BEGIN PRIVATE KEY-----
+MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBANWW2pMa7p2RipDr
+h0Nyql4qikaMCyjpl/MBiR7zTdRGV1d3ce0fcW3yi1hlu3NAgyxPT42YT+IbWFm3
+PWyBFH6vcYHWJfTKBqyQSJkOVnS3BPaPirR2NvBAujXtbiuYVwHf8/1pl74nihjU
+tBWWjY2FbG0jwikCAK3+o1xryjLLAgMBAAECgYAtbZdxoFHOG62AI0gytUm9G4kr
+dg/NlNlnqxTyC0erdYaQKOyHRZ/HhcXTeFfFLJx5qSi/cfzTl4NUGaAr2sxzvf63
+ZFbXr7LIOVDCO263MfqLmHCN2KxC8pdNrBj62jmnzHaNUTDvP3wE7QzsFSDoCK3A
+va2DicuKRgX3lZu8kQJBAOoglrEvNuaO/eR2gU3vO9MJ3EyjclV76LUSK6f6V2gk
+zhWgQfOySihQmCsAQcbU2rO7qDkvonW+dRFM6aJSiwMCQQDpixNh+HMFFiljpMZC
+YOSUPdn7RjQz1DdDLjvVQzc2aaqYmsZkkqJKD2HmJZnGVjfsV9WobsN2G7CWgARq
+rQqZAkB17hJZj3G08qO6l2KMUgutQpM/2zh1DKPryQpKY1PxtlBEHmP6D31BD0+G
+oWuAbqj2zXhvzamka1nma/pm8/LnAkEA0MfAACl3yehR//5iLx0nu06//F56dIsX
+DDvcyX5ZcY9tLxfOnEJqSwMNZg3fNuwE+ohbPUQoAQIoD6NKT4N6oQJBAIsBC2YP
+Tfcr0PInlzSU/QaseHymOPRxatTR+xzQEonEklZc5tQoKmAtUlNtPSjkm9wsr3ma
+R/+jD/0p7JZ9D10=
+-----END PRIVATE KEY-----"""
 
     # 构建请求参数
     data = [
