@@ -2,7 +2,7 @@ import requests
 import xjy_rsa_util
 
 # 请求地址,正式环境要改成去掉"dev-"前缀
-url = "http://dev-openapi.jiayihn.com/api/open/locasys-new-shop/save-batch-for-open"
+url_prev = "http://dev-openapi.jiayihn.com/api/open"
 
 # 调用方id，由xjy开放平台提供
 merchant_id = "10004"
@@ -19,12 +19,20 @@ D/h/4PpIqpaDclkVO7I+XB3NZl+oGhUCIQDJc+QHJlkkF0LtkoSqUznF5lpSVRKV
 wlyxBHIwk/tzrA==
 -----END PRIVATE KEY-----"""
 
-if __name__ == '__main__':
+'''
+更新商圈例子
+'''
+def insert_or_update_example():
 
-    # 构建请求参数
+    # 请求地址
+    url = url_prev + "/locasys-new-shop/save-batch-for-open"
+
+    # 构建请求参数(同一district_code中如果存在该business_district_name的非点状商圈则更新不存在则插入，business_district_name_new用于更新原商圈名称)
     data = [
         {
-            "business_district_name": "测试商圈1",
+            "business_district_name": "更新测试商圈1",
+            "business_district_name_new": "更新测试商圈1",
+            "out_biz_id": "asflhsafhsdfjsahfksajhfksahasdlkfsakfjsha",
             "district_code": "430103",
             "location": "112.969029,28.193397;112.96895,28.192156;112.970008,28.192081;112.970273,28.193261;112.969029,28.193397",
             "passenger_flow": "10000",
@@ -65,3 +73,49 @@ if __name__ == '__main__':
 
     # 打印响应内容
     print(response.json())
+
+
+'''
+删除商圈例子
+'''
+def delete_example():
+
+    # 请求地址
+    url = url_prev + "/locasys-new-shop/delete-batch-for-open"
+    
+    # 构建请求参数
+    data = [
+        {
+            "business_district_name": "测试商圈2",
+            "district_code": "430103",
+        }
+    ]
+
+        # 下划线转驼峰
+    camel_data = [
+        {
+            xjy_rsa_util.underscore_to_camel(k): v
+            for k, v in item.items() # 遍历每个字典对象的键值对
+        }
+        for item in data # 遍历列表中的每个字典对象
+    ]
+
+    # 构建请求体
+    request_body = xjy_rsa_util.build_request_body(
+        data = camel_data,
+        private_key_pem = private_key_pem,
+        merchant_id = merchant_id
+    )
+
+    # 打印请求信息
+    print(f"url={url}, request_body={request_body}")
+
+    # 发送请求
+    response = requests.post(url, json=request_body)
+
+    # 打印响应内容
+    print(response.json())
+
+
+if __name__ == '__main__':
+    delete_example()
