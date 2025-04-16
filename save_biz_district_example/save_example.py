@@ -2,7 +2,7 @@ import requests
 import xjy_rsa_util
 
 # 请求地址,正式环境要改成去掉"dev-"前缀
-url_prev = "http://dev-openapi.jiayihn.com/api/open"
+url_prev = "http://openapi.jiayihn.com/api/open"
 
 # 调用方id，由xjy开放平台提供
 merchant_id = "10004"
@@ -30,22 +30,10 @@ def insert_or_update_example():
     # 构建请求参数(同一district_code中如果存在该business_district_name的非点状商圈则更新不存在则插入，business_district_name_new用于更新原商圈名称)
     data = [
         {
-            "business_district_name": "更新测试商圈1",
-            "business_district_name_new": "更新测试商圈1",
-            "out_biz_id": "asflhsafhsdfjsahfksajhfksahasdlkfsakfjsha",
+            "business_district_name": "汇景大厦1",
+            "business_district_name_new": "汇景大厦",
             "district_code": "430103",
-            "location": "112.969029,28.193397;112.96895,28.192156;112.970008,28.192081;112.970273,28.193261;112.969029,28.193397",
-            "passenger_flow": "10000",
-            "unint_passenger_flow": "5000.5",
-            "level": "S"
-        },
-        {
-            "business_district_name": "测试商圈2",
-            "district_code": "430103",
-            "location": "112.976346,28.186487;112.976348,28.183704;112.979951,28.183463;112.980165,28.185817;112.979006,28.185817;112.978126,28.185999;112.976501,28.186639;112.976346,28.186487",
-            "passenger_flow": "5000",
-            "unint_passenger_flow": "500.5",
-            "level": "A"
+            "location": "112.969029,28.193397;112.96895,28.192156;112.97000781481935,28.19208145606125;112.9702728406143,28.193260896425258;112.969029,28.193397",
         }
     ]
 
@@ -88,6 +76,7 @@ def delete_example():
         {
             "business_district_name": "测试商圈2",
             "district_code": "430103",
+            "location": "112.969029,28.193397;112.96895,28.192156;112.97000781481935,28.19208145606125;112.9702728406143,28.193260896425258;112.969029,28.193397"
         }
     ]
 
@@ -118,4 +107,4 @@ def delete_example():
 
 
 if __name__ == '__main__':
-    delete_example()
+    insert_or_update_example()
