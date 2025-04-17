@@ -11,8 +11,7 @@ class LoginUser:
 def get_token():
     wmy = LoginUser(userAcct="80000001", password="80000001@0031")
     lf = LoginUser(userAcct="80003602", password="123456")
-
-    loginUser = lf
+    loginUser = wmy
     url = "https://sso.jiayihn.com/api/auth/oauth2/login"
     params = {
         'userAcct': loginUser.userAcct,
@@ -75,5 +74,5 @@ def read_excel_import_to_api():
 
 if __name__ == "__main__":
     print("start!")
-    # get_token()
-    request_test1()
+
+    get_token()
