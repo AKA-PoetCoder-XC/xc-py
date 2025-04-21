@@ -121,34 +121,45 @@ def login(
 
 
 """
-微信搜索公众号接口
-
-author: XieChen
+获取重定向地址请求
 """
-
-
-def search(
-    search_key: str,
-    slave_sid: str = slave_sid,
-    slave_user: str = slave_user,
-    token: str = token,
-    fingerprint: str = fingerprint,
-    begin: int = 0,
-    count: int = 5,
-):
-
-    url = "https://mp.weixin.qq.com/cgi-bin/searchbiz"
-
-    headers = {
-        "cookie": f"slave_user={slave_user}; slave_sid={slave_sid};",
+def redirect(slave_user:str=slave_user, slave_sid:str=slave_sid):
+    # 定义目标 URL 和查询参数
+    base_url = "https://mp.weixin.qq.com/cgi-bin/loginpage"
+    query_params = {
+        "url": "/cgi-bin/home?t=home/index&lang=zh_CN"
     }
 
-    params = {
+    # 定义请求头
+    headers = {
+        "cookie": "slave_sid="+slave_sid+"; slave_user="+slave_user,
+    }
+
+    try:
+        # 发起 GET 请求
+        response = requests.get(base_url, params=query_params, headers=headers, allow_redirects=False)
+        return response
+
+    except requests.exceptions.RequestException as e:
+        print(f"请求失败: {e}")
+
+def search(search_key:str , 
+           slave_user:str=slave_user, 
+           slave_sid:str=slave_sid, 
+           fingerprint:str=fingerprint)->str:
+
+    url="https://mp.weixin.qq.com/cgi-bin/searchbiz"
+    
+    headers = {
+        "cookie": "slave_user="+slave_user+"; slave_sid="+slave_sid,
+    }
+
+    params={
         "query": search_key,
         "action": "search_biz",
-        "begin": begin,
-        "count": count,
-        "fingerprint": fingerprint,
+        "begin": 0,
+        "count": 5,
+        "fingerprint": fingerprint, # 设备指纹值
         "token": token,
         "lang": "zh_CN",
         "f": "json",
@@ -156,7 +167,6 @@ def search(
     }
     response = requests.get(url, params=params, headers=headers)
     return response
-
 
 def get_val_from_cookie(
         cookie_str: str,
