@@ -13,7 +13,7 @@ slave_user = "gh_fecac6d163ff"
 token = ""
 fingerprint = "ae3d22be88e45b4163f6e29fcb479be4"
 
-def get_ua_id():
+def get_ua_id()->str:
     url = "https://mp.weixin.qq.com/"
     response = requests.get(url)
     return get_val_from_cookie(response.headers["Set-Cookie"], "ua_id")
@@ -146,7 +146,7 @@ def redirect(slave_user:str=slave_user, slave_sid:str=slave_sid):
 def search(search_key:str , 
            slave_user:str=slave_user, 
            slave_sid:str=slave_sid, 
-           fingerprint:str=fingerprint)->str:
+           fingerprint:str=fingerprint):
 
     url="https://mp.weixin.qq.com/cgi-bin/searchbiz"
     
@@ -171,20 +171,20 @@ def search(search_key:str ,
 def get_val_from_cookie(
         cookie_str: str,
         key: str
-):
+)->str:
 
     # 使用正则表达式提取 key 的值
     match = re.search(f"{key}=([^;]+)", cookie_str)
     if match:
         return match.group(1)
     else:
-        return None
+        return ""
 
 
 if __name__ == "__main__":
     # response = login()
     # response = search("青年湖南")
-    ua_id=get_ua_id()
+    ua_id:str=get_ua_id()
     wxuin=get_wxuin()
     uuid=get_uuid()
     response = login(ua_id=ua_id,wxuin=wxuin,uuid=uuid)

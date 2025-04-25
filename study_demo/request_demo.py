@@ -11,7 +11,9 @@ class LoginUser:
 def get_token():
     wmy = LoginUser(userAcct="80000001", password="80000001@0031")
     lf = LoginUser(userAcct="80003602", password="123456")
-    loginUser = wmy
+    hc = LoginUser(userAcct="80000056", password="80000056@1547")
+    yj = LoginUser(userAcct="80002254", password="80002254@2071")
+    loginUser = lf
     url = "https://sso.jiayihn.com/api/auth/oauth2/login"
     params = {
         'userAcct': loginUser.userAcct,
