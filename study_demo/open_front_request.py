@@ -48,7 +48,11 @@ def push_cockpit_role(point_id):
     # 打印响应内容
     print(response.json())
 
+def batch_push_cockpit_role(point_id_list):
+    for point_id in point_id_list:
+        push_cockpit_role(point_id)
+
 
 
 if __name__ == '__main__':
-    push_cockpit_role(10899)
+    batch_push_cockpit_role([11685])

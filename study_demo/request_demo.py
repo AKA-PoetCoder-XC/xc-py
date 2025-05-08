@@ -13,6 +13,7 @@ def get_token():
     lf = LoginUser(userAcct="80003602", password="123456")
     hc = LoginUser(userAcct="80000056", password="80000056@1547")
     yj = LoginUser(userAcct="80002254", password="80002254@2071")
+    cd= LoginUser(userAcct="80000141", password="80000141@8508")
     loginUser = lf
     url = "https://sso.jiayihn.com/api/auth/oauth2/login"
     params = {
