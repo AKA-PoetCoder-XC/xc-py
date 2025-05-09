@@ -55,6 +55,7 @@ class AppiumClient:
     app_activity: str  # app启动入口
     appium_server_host: str  # appium server主机地址，默认为本地
     devices_map_appium_server_port: dict = {}  # device与appium server端口映射关系
+    time_for_wait_element:int = 1 # 等待元素出现的时间
 
     def __init__(
         self,
@@ -62,6 +63,7 @@ class AppiumClient:
         app_name: str = None,
         devices: list = None,
         appium_server_host: str = "127.0.0.1",
+        time_for_wait_element: int = None,
     ):
         """
         对象初始化
@@ -103,6 +105,10 @@ class AppiumClient:
 
         # 连接appium_server并获取驱动，每个设备对应一个驱动
         self.drivers = self.connect_to_server()
+
+        # 指定等待元素出现的时间
+        if time_for_wait_element:
+            self.time_for_wait_element = time_for_wait_element  
 
     def get_app_package(self) -> str:
         """
@@ -282,7 +288,9 @@ class AppiumClient:
                 command_executor=f"127.0.0.1:{current_device_appium_server_port}",
                 options=UiAutomator2Options().load_capabilities(capabilities),
             )
-            current_device_dirver.implicitly_wait(10)  # 元素出现之前的等待时间设置
+            current_device_dirver.implicitly_wait(
+                self.time_for_wait_element
+            )  # 元素出现之前的等待时间设置
             # 添加驱动对象到驱动列表
             drivers.append(current_device_dirver)
             print(
@@ -383,12 +391,32 @@ class AppiumClient:
             except Exception as e:
                 print(f"点击“同意”失败!: {e}")
 
+            # 登录
+            start_time = time.time()
+            try:
+                # 输入手机号
+                driver.find_elements(
+                    by=AppiumBy.ID, value="cn.damai:id/aliuser_login_mobile_et"
+                )[0].send_keys("18873959885")
+                print(f"输入手机号耗时: {time.time() - start_time:.2f}秒")
+            except Exception as e:
+                print(f"输入手机号失败!: {e}")
+            # 点击“获取验证码”
+            start_time = time.time()
+            try:
+                driver.find_elements(
+                    by=AppiumBy.ID, value="cn.damai:id/aliuser_login_send_smscode_btn"
+                )[0].click()
+                print(f"点击“获取验证码”耗时: {time.time() - start_time:.2f}秒")
+            except Exception as e:
+                print(f"点击“获取验证码”失败!: {e}")
+
 
 if __name__ == "__main__":
     # 实例化appium client并连接appium server
     appium_client = AppiumClient(appium_server_host="127.0.0.1")
     # # 启动app
-    # appium_client.activate_app("cn.damai")
+    appium_client.activate_app("cn.damai")
     # 开始对应用进行操作
     appium_client.process()
     # 关闭appium client
