@@ -146,7 +146,7 @@ class AppiumServer:
             s.close()
             return ip
         except Exception as e:
-            raise ValueError(f"获取本机IP地址失败: {str(e)}")
+            raise ValueError(f"获取本机IP地址失败: {str(e)}") from e
 
 
 if __name__ == "__main__":

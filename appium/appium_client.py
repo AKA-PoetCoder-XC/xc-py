@@ -375,6 +375,14 @@ class AppiumClient:
             except Exception as e:
                 print(f"点击“手机号登录”失败!: {e}")
 
+            # 点击同意
+            start_time = time.time()
+            try:
+                driver.find_elements(by=AppiumBy.ID, value="cn.damai:id/damai_dialog_confirm_btn")[0].click()
+                print(f"点击“同意”耗时: {time.time() - start_time:.2f}秒")
+            except Exception as e:
+                print(f"点击“同意”失败!: {e}")
+
 
 if __name__ == "__main__":
     # 实例化appium client并连接appium server
