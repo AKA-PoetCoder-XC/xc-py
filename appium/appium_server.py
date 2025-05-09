@@ -1,14 +1,13 @@
 import subprocess
-
-from appium.webdriver.webdriver import WebDriver
-from appium.options.android.uiautomator2.base import UiAutomator2Options
+import socket
 
 class AppiumServer():
 
     # 对象成员变量
     devices:list = [] # 设备udid列表
-    devices_map_server_port:dict = {} # 设备与appium server端口映射关系
-
+    devices_map_appium_server_port:dict = {} # 设备与appium server端口映射关系
+    default_port:int = 4723 # 默认端口
+    host:str
     def __init__(
         self,
         devices:list = [],
@@ -16,8 +15,7 @@ class AppiumServer():
         """
         对象初始化
         args:
-            app_name: app名称, 用于模糊匹配
-            devices: 设备udid列表
+            devices: 设备列表(udid,比如emulator-5554)
         return:
             None
         author: 
@@ -31,8 +29,6 @@ class AppiumServer():
             self.devices = devices # 指定设备udid列表
         else:
             self.devices = self.get_adb_devices() # 获取连接的设备列表
-        # 启动appium server
-        self.start()
 
     def get_adb_devices(self) -> list:
         """
@@ -63,18 +59,52 @@ class AppiumServer():
     def start(self):
         """
         启动appium server
-        args:
-            diveces: 设备udid列表
         return:
             drivers: 驱动列表
         """
         if not self.devices:
             raise ValueError('未找到连接的设备!')
-        port = 4723
         for index,device in enumerate(self.devices):
-            current_device_server_port = port + index
+            current_device_appium_server_port = AppiumServer.get_port_by_device_index(index)
             # 启动Appium server
-            cmd = ['cmd', '/c', 'start', 'appium', '-p', str(current_device_server_port)]
+            cmd = ['cmd', '/c', 'start', 'appium', '-p', str(current_device_appium_server_port)]
             subprocess.Popen(cmd)
             # 记录设备与appium server端口映射关系
-            self.devices_map_server_port[device] = current_device_server_port
+            self.devices_map_appium_server_port[device] = current_device_appium_server_port
+            print(f"appium server[{AppiumServer.get_local_ip()}:{current_device_appium_server_port}]启动成功,对应设备[{device}]")
+
+    @staticmethod
+    def get_port_by_device_index(device_index:int) -> int:
+        """
+        获取设备对应的appium server端口
+        args:
+            device_index: 设备索引
+        return:
+            port: appium server端口
+        """
+        return AppiumServer.default_port + device_index
+
+    @staticmethod
+    def get_local_ip() -> str:
+        """
+        获取本机IP地址
+        args:
+            None
+        return:
+            ip: 本机IP地址
+        """
+        try:
+            # 创建一个socket连接
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            # 连接到一个公共DNS服务器（这里使用Google的8.8.8.8）
+            s.connect(('8.8.8.8', 80))
+            # 获取本机IP地址
+            ip = s.getsockname()[0]
+            s.close()
+            return ip
+        except Exception as e:
+            raise ValueError(f"获取本机IP地址失败: {str(e)}")
+
+if __name__ == '__main__':
+    # 启动服务
+    appium_server = AppiumServer().start()

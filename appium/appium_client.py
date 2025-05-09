@@ -1,5 +1,6 @@
 import subprocess
 import time
+from typing_extensions import cast
 import requests
 
 from appium.webdriver.webdriver import WebDriver
@@ -15,13 +16,15 @@ class AppiumClient():
     drivers:list = [] # 驱动列表
     app_package:str  # app包名
     app_activity:str # app启动入口
-    appium_server:AppiumServer # appium server对象
+    appium_server_host:str # appium server主机地址，默认为本地
+    devices_map_appium_server_port:dict = {} # device与appium server端口映射关系
 
     def __init__(
         self,
-        appium_server:AppiumServer,
+        appium_server = None,
         app_name = None,
-        devices:list = []
+        devices:list = [],
+        appium_server_host:str = "127.0.0.1"
     ):
         """
         对象初始化
@@ -36,6 +39,11 @@ class AppiumClient():
         date: 
             2025-05-08
         """
+        # 指定appium server主机地址
+        if appium_server_host:
+            self.appium_server_host = appium_server_host
+        else:
+            self.appium_server_host = "127.0.0.1"
 
         # 初始化设备列表
         if devices:
@@ -44,17 +52,18 @@ class AppiumClient():
             self.devices = self.get_adb_devices() # 获取连接的设备列表
 
         # 初始化appium server
-        self.appium_server = appium_server # 指定appium server对象
+        if not appium_server and isinstance(appium_server, AppiumServer):
+            self.devices_map_server_port = appium_server.devices_map_appium_server_port # 指定appium server对象
+            self.appium_server_host = appium_server.host # 指定appium server主机地址
 
         # 初始化app名称
         if app_name:
             self.app_name = app_name # 指定app名称，用于模糊匹配
             self.app_package = self.get_app_package() # 指定app包名
             self.app_activity = self.get_launch_activity() # 指定app启动入口
-            
-        # 初始化appium驱动，每个设备对应一个驱动
-        self.drivers = self.get_drivers_by_devices()
 
+        # 连接appium_server并获取驱动，每个设备对应一个驱动
+        self.drivers = self.connect_to_server()
 
     def get_app_package(self) -> str:
         """
@@ -80,8 +89,7 @@ class AppiumClient():
                 print(f"包名: {app_package}")
                 return app_package
 
-        raise ValueError(f"未匹配到包含'{app_name}'的包名!")
-
+        raise ValueError(f"未匹配到包含app_name['{app_name}']的包名!")
 
     def get_launch_activity(self) -> str:
         """
@@ -108,10 +116,9 @@ class AppiumClient():
                         activity = line.split()[1].split('/')[1]
                         print(f"启动Activity: {activity}")
                         return activity
-        
-        raise ValueError(f"未匹配到包含'{app_package}'的启动入口!")
 
-    
+        raise ValueError(f"未匹配到包含'app_package[{app_package}]'的启动入口!")
+
     def get_adb_devices(self) -> list:
         """
         获取adb连接的设备列表
@@ -137,8 +144,7 @@ class AppiumClient():
             raise ValueError('未找到连接的设备!')
         return self.devices
 
-
-    def get_drivers_by_devices(self) -> list:
+    def connect_to_server(self) -> list:
         """
         根据设备列表创建驱动列表
         args:
@@ -146,28 +152,32 @@ class AppiumClient():
         return:
             drivers: 驱动列表
         """
+        host = self.appium_server_host
         diveces:list = self.devices # 指定设备udid列表
         if not diveces:
             raise ValueError('未找到连接的设备!')
         drivers = []
         # 遍历设备列表构建驱动列表
-        for device in self.devices:
-            # 获取当前设备对应的Appium server端口
-            current_device_server_port = self.appium_server.devices_map_server_port[device]
+        for index,device in enumerate(self.devices):
+            # 从设备对应appium端口获取当前设备对应的Appium server端口
+            if self.devices_map_appium_server_port:
+                current_device_appium_server_port = self.devices_map_server_port[device]
+            else:
+                # 未指定appium server端口，使用默认端口4723
+                current_device_appium_server_port = AppiumServer.get_port_by_device_index(index)
 
             # 使用轮询方式检查该端口的Appium server是否已经启动
             max_retry = 10
             retry_count = 0
             retry_interval = 1  # 每次重试间隔1秒
             server_started = False
-            
-            print(f"等待Appium服务器在端口{current_device_server_port}上启动...")
+
             while retry_count < max_retry and not server_started:
                 try:
+                    print(f"device[{device}]等待app server在[{host}:{current_device_appium_server_port}]上启动...")
                     # 尝试连接服务器，如果成功则跳出循环
-                    response = requests.get(f"http://127.0.0.1:{current_device_server_port}/status", timeout=1)
+                    response = requests.get(f"http://{host}:{current_device_appium_server_port}/status", timeout=1)
                     if response.status_code == 200:
-                        print(f"Appium服务器在端口{current_device_server_port}上已成功启动")
                         server_started = True
                     else:
                         retry_count += 1
@@ -175,11 +185,11 @@ class AppiumClient():
                 except Exception:
                     retry_count += 1
                     time.sleep(retry_interval)
-            
+
             if not server_started:
-                print(f"警告: Appium服务器可能未完全启动，将继续尝试创建会话")
+                print(f"警告: Appium服务器可能未完全启动，将继续尝试连接...")
                 time.sleep(2)  # 最后再等待2秒
-            
+
             # 初始化Appium驱动
             capabilities = {
                 "platform_name": "Android", # 指定设备平台名称
@@ -189,37 +199,102 @@ class AppiumClient():
                 # "app_package": self.app_package_name, # 指定启动的app包名
                 # "app_activity": self.get_launch_activity(self.app_package_name), # 指定app启动入口，一个app可能有多个入口，需要根据实际情况选择
                 "no_reset": "true", # 不重置应用状态
+                "waitForIdleTimeout": 0 # 控制Appium在操作后等待应用进入空闲状态的时间（毫秒）,
             }
             # 创建Appium驱动对象
-            current_device_dirver = WebDriver(command_executor=f"127.0.0.1:{current_device_server_port}", options=UiAutomator2Options().load_capabilities(capabilities))
-            current_device_dirver.implicitly_wait(10)
+            current_device_dirver = WebDriver(command_executor=f"127.0.0.1:{current_device_appium_server_port}", options=UiAutomator2Options().load_capabilities(capabilities))
+            current_device_dirver.implicitly_wait(10) # 元素出现之前的等待时间设置
             # 添加驱动对象到驱动列表
             drivers.append(current_device_dirver)
+            print(f"device[{device}]成功连接到Appium server, 端口号:[{current_device_appium_server_port}]")
         return drivers
-    
-    """
-    启动app
-    author: XieChen
-    date: 2025/05/08
-    """
+
     def activate_app(self, appn_package:str):
-        # 遍历驱动列表
-        for driver in self.drivers:
+        """
+        启动app
+        args:
+            appn_package: app包名
+        return:
+            None
+        author:
+            XieChen
+        date:
+            2025-05-08
+        """
+        from concurrent.futures import ThreadPoolExecutor
+
+        def _activate_app(driver):
             # 判断应用是否已经安装
             if not driver.is_app_installed(appn_package):
-                raise RuntimeError(f'app{appn_package}未安装,启动失败!')
+                raise RuntimeError(f'app[{appn_package}]未安装,启动失败!')
             # 启动应用
             driver.activate_app(appn_package)
-            print(f'app（{appn_package}）已在设备 {driver.capabilities["deviceName"]} 上成功启动')
-    
-    """
-    清除测试环境
-    author: XieChen
-    date: 2025/05/08
-    """
+            print(f'app[{appn_package}]已在设备[{driver.capabilities["deviceName"]}]上成功启动')
+
+        # 使用线程池并行执行
+        with ThreadPoolExecutor() as executor:
+            executor.map(_activate_app, self.drivers)
+
     def close_driver(self):
+        """
+        关闭驱动连接
+        args:
+            None
+        return:
+            None
+        author:
+            XieChen
+        date:
+            2025-05-08
+        """
         for driver in self.drivers:
             if driver:
                 driver.quit()
 
+    def process(self):
+        """
+        开始对应用进行操作
+        return:
+            None
+        author:
+            XieChen
+        date:
+            2025-05-08
+        """
+        from appium.webdriver.common.appiumby import AppiumBy
+        import time
 
+        for driver in self.drivers:
+            # 定位底部“我的”元素进行点击
+            start_time = time.time()
+            try:
+                driver.find_elements(by=AppiumBy.ID, value="cn.damai:id/tab_text")[4].click()
+                print(f"点击“我的”耗时: {time.time() - start_time:.2f}秒")
+            except Exception as e:
+                print(f"点击“我的”失败!: {e}")
+            
+            # 点击“立即登录"
+            start_time = time.time()
+            try:
+                driver.find_elements(by=AppiumBy.ID, value="cn.damai:id/mine_center_header_user_name")[0].click()
+                print(f"点击“立即登录”耗时: {time.time() - start_time:.2f}秒")
+            except Exception as e:
+                print(f"点击“立即登录”失败!: {e}")
+
+            # 点击“手机号登录”
+            start_time = time.time()
+            try:
+                driver.find_elements(by=AppiumBy.ID, value="cn.damai:id/login_third_account_btn")[0].click()
+                print(f"点击“手机号登录”耗时: {time.time() - start_time:.2f}秒")
+            except Exception as e:
+                print(f"点击“手机号登录”失败!: {e}")
+
+if __name__ == '__main__':
+    # 实例化appium client并连接appium server
+    appium_client = AppiumClient(appium_server_host="127.0.0.1")
+    # # 启动app
+    # appium_client.activate_app("cn.damai")
+    # 开始对应用进行操作
+    appium_client.process()
+    # 关闭appium client
+    appium_client.close_driver()

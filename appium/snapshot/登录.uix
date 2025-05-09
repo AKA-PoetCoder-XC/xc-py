@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<hierarchy rotation="0">
+    <node index="0" text="" resource-id="" class="android.widget.FrameLayout" package="cn.damai"
+        content-desc="" checkable="false" checked="false" clickable="false" enabled="true"
+        focusable="false" focused="false" scrollable="false" long-clickable="false" password="false"
+        selected="false" bounds="[0,0][540,960]">
+        <node index="0" text="" resource-id="" class="android.widget.LinearLayout"
+            package="cn.damai" content-desc="" checkable="false" checked="false" clickable="false"
+            enabled="true" focusable="false" focused="false" scrollable="false"
+            long-clickable="false" password="false" selected="false" bounds="[0,0][540,960]">
+            <node index="0" text="" resource-id="" class="android.widget.FrameLayout"
+                package="cn.damai" content-desc="" checkable="false" checked="false"
+                clickable="false" enabled="true" focusable="false" focused="false"
+                scrollable="false" long-clickable="false" password="false" selected="false"
+                bounds="[0,0][540,960]">
+                <node index="0" text="" resource-id="cn.damai:id/action_bar_root"
+                    class="android.widget.FrameLayout" package="cn.damai" content-desc=""
+                    checkable="false" checked="false" clickable="false" enabled="true"
+                    focusable="false" focused="false" scrollable="false" long-clickable="false"
+                    password="false" selected="false" bounds="[0,0][540,960]">
+                    <node index="0" text="" resource-id="android:id/content"
+                        class="android.widget.FrameLayout" package="cn.damai" content-desc=""
+                        checkable="false" checked="false" clickable="false" enabled="true"
+                        focusable="false" focused="false" scrollable="false" long-clickable="false"
+                        password="false" selected="false" bounds="[0,0][540,960]">
+                        <node index="0" text="" resource-id="cn.damai:id/aliuser_main_content"
+                            class="android.widget.LinearLayout" package="cn.damai" content-desc=""
+                            checkable="false" checked="false" clickable="false" enabled="true"
+                            focusable="false" focused="false" scrollable="false"
+                            long-clickable="false" password="false" selected="false"
+                            bounds="[0,0][540,960]">
+                            <node index="0" text="" resource-id="cn.damai:id/aliuser_toolbar"
+                                class="android.view.ViewGroup" package="cn.damai" content-desc=""
+                                checkable="false" checked="false" clickable="false" enabled="true"
+                                focusable="false" focused="false" scrollable="false"
+                                long-clickable="false" password="false" selected="false"
+                                bounds="[0,36][540,120]">
+                                <node index="0" text="" resource-id=""
+                                    class="android.widget.ImageButton" package="cn.damai"
+                                    content-desc="返回" checkable="false" checked="false"
+                                    clickable="true" enabled="true" focusable="true" focused="false"
+                                    scrollable="false" long-clickable="false" password="false"
+                                    selected="false" bounds="[0,36][84,120]" />
+                            </node>
+                            <node index="1" text="" resource-id="cn.damai:id/aliuser_content"
+                                class="android.widget.FrameLayout" package="cn.damai"
+                                content-desc="" checkable="false" checked="false" clickable="false"
+                                enabled="true" focusable="false" focused="false" scrollable="false"
+                                long-clickable="false" password="false" selected="false"
+                                bounds="[0,120][540,960]">
+                                <node index="0" text=""
+                                    resource-id="cn.damai:id/aliuser_content_frame"
+                                    class="android.widget.FrameLayout" package="cn.damai"
+                                    content-desc="" checkable="false" checked="false"
+                                    clickable="false" enabled="true" focusable="false"
+                                    focused="false" scrollable="false" long-clickable="false"
+                                    password="false" selected="false" bounds="[0,120][540,960]">
+                                    <node index="0" text="" resource-id="cn.damai:id/ali_userbg"
+                                        class="android.widget.LinearLayout" package="cn.damai"
+                                        content-desc="" checkable="false" checked="false"
+                                        clickable="false" enabled="true" focusable="false"
+                                        focused="false" scrollable="false" long-clickable="false"
+                                        password="false" selected="false" bounds="[0,120][540,960]">
+                                        <node index="0" text=""
+                                            resource-id="cn.damai:id/login_platform_damai_logo"
+                                            class="android.widget.ImageView" package="cn.damai"
+                                            content-desc="" checkable="false" checked="false"
+                                            clickable="false" enabled="true" focusable="false"
+                                            focused="false" scrollable="false"
+                                            long-clickable="false" password="false" selected="false"
+                                            bounds="[132,251][408,352]" />
+                                        <node index="1" text=""
+                                            resource-id="cn.damai:id/login_third_tb_btn"
+                                            class="android.widget.FrameLayout" package="cn.damai"
+                                            content-desc="" checkable="false" checked="false"
+                                            clickable="true" enabled="true" focusable="true"
+                                            focused="false" scrollable="false"
+                                            long-clickable="false" password="false" selected="false"
+                                            bounds="[36,496][503,588]">
+                                            <node index="0" text="手机淘宝登录" resource-id=""
+                                                class="android.widget.TextView" package="cn.damai"
+                                                content-desc="" checkable="false" checked="false"
+                                                clickable="false" enabled="true" focusable="false"
+                                                focused="false" scrollable="false"
+                                                long-clickable="false" password="false"
+                                                selected="false" bounds="[42,505][497,579]" />
+                                        </node>
+                                        <node index="2" text=""
+                                            resource-id="cn.damai:id/dm_ll_login_pro"
+                                            class="android.widget.LinearLayout" package="cn.damai"
+                                            content-desc="" checkable="false" checked="false"
+                                            clickable="true" enabled="true" focusable="true"
+                                            focused="false" scrollable="false"
+                                            long-clickable="false" password="false" selected="false"
+                                            bounds="[39,618][501,697]">
+                                            <node index="0" text=""
+                                                resource-id="cn.damai:id/dm_cb_login_pro"
+                                                class="android.widget.CheckBox" package="cn.damai"
+                                                content-desc="" checkable="true" checked="false"
+                                                clickable="false" enabled="false" focusable="false"
+                                                focused="false" scrollable="false"
+                                                long-clickable="false" password="false"
+                                                selected="false" bounds="[62,618][92,648]" />
+                                            <node index="1"
+                                                text="已阅读并同意《大麦用户服务协议》、《大麦基本功能隐私政策》、《订票服务条款》中全部条款。&#10;第三方账号首次登录需绑定手机号。"
+                                                resource-id="cn.damai:id/dm_tv_login_pro_desc"
+                                                class="android.widget.TextView" package="cn.damai"
+                                                content-desc="" checkable="false" checked="false"
+                                                clickable="true" enabled="true" focusable="true"
+                                                focused="false" scrollable="false"
+                                                long-clickable="true" password="false"
+                                                selected="false" bounds="[101,618][501,697]" />
+                                        </node>
+                                        <node index="3" text="" resource-id=""
+                                            class="android.widget.LinearLayout" package="cn.damai"
+                                            content-desc="" checkable="false" checked="false"
+                                            clickable="false" enabled="true" focusable="false"
+                                            focused="false" scrollable="false"
+                                            long-clickable="false" password="false" selected="false"
+                                            bounds="[0,697][540,960]">
+                                            <node index="0" text="更多登录方式"
+                                                resource-id="cn.damai:id/login_more_title"
+                                                class="android.widget.TextView" package="cn.damai"
+                                                content-desc="" checkable="false" checked="false"
+                                                clickable="false" enabled="true" focusable="false"
+                                                focused="false" scrollable="false"
+                                                long-clickable="false" password="false"
+                                                selected="false" bounds="[207,782][333,811]" />
+                                            <node index="1" text="" resource-id=""
+                                                class="android.widget.LinearLayout"
+                                                package="cn.damai" content-desc="" checkable="false"
+                                                checked="false" clickable="false" enabled="true"
+                                                focusable="false" focused="false" scrollable="false"
+                                                long-clickable="false" password="false"
+                                                selected="false" bounds="[0,826][540,943]">
+                                                <node NAF="true" index="0" text=""
+                                                    resource-id="cn.damai:id/login_third_account_btn"
+                                                    class="android.widget.ImageView"
+                                                    package="cn.damai" content-desc=""
+                                                    checkable="false" checked="false"
+                                                    clickable="true" enabled="true" focusable="true"
+                                                    focused="false" scrollable="false"
+                                                    long-clickable="false" password="false"
+                                                    selected="false" bounds="[135,826][225,943]" />
+                                                <node NAF="true" index="1" text=""
+                                                    resource-id="cn.damai:id/login_third_zhifubao_btn"
+                                                    class="android.widget.ImageView"
+                                                    package="cn.damai" content-desc=""
+                                                    checkable="false" checked="false"
+                                                    clickable="true" enabled="true" focusable="true"
+                                                    focused="false" scrollable="false"
+                                                    long-clickable="false" password="false"
+                                                    selected="false" bounds="[225,826][315,943]" />
+                                                <node NAF="true" index="2" text=""
+                                                    resource-id="cn.damai:id/login_third_more_btn"
+                                                    class="android.widget.ImageView"
+                                                    package="cn.damai" content-desc=""
+                                                    checkable="false" checked="false"
+                                                    clickable="true" enabled="true" focusable="true"
+                                                    focused="false" scrollable="false"
+                                                    long-clickable="false" password="false"
+                                                    selected="false" bounds="[315,826][405,943]" />
+                                            </node>
+                                        </node>
+                                    </node>
+                                </node>
+                            </node>
+                        </node>
+                    </node>
+                </node>
+            </node>
+        </node>
+        <node index="1" text="" resource-id="android:id/statusBarBackground"
+            class="android.view.View" package="cn.damai" content-desc="" checkable="false"
+            checked="false" clickable="false" enabled="true" focusable="false" focused="false"
+            scrollable="false" long-clickable="false" password="false" selected="false"
+            bounds="[0,0][540,36]" />
+    </node>
+</hierarchy>
