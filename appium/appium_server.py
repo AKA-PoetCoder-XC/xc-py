@@ -112,8 +112,8 @@ class AppiumServer:
                 current_device_appium_server_port
             )
             print(
-                f"""appium server[{AppiumServer.get_local_ip()}:{current_device_appium_server_port}]启动成功,
-                对应设备[{device}]"""
+                f"""appium server[{AppiumServer.get_local_ip()}:{current_device_appium_server_port}]
+                启动成功,对应设备[{device}]"""
             )
 
     @staticmethod
