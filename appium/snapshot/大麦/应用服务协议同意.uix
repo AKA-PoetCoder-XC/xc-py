@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<hierarchy rotation="0">
+    <node index="0" text="" resource-id="" class="android.widget.FrameLayout" package="cn.damai"
+        content-desc="" checkable="false" checked="false" clickable="false" enabled="true"
+        focusable="false" focused="false" scrollable="false" long-clickable="false" password="false"
+        selected="false" bounds="[0,120][540,840]">
+        <node index="0" text="" resource-id="" class="android.widget.FrameLayout" package="cn.damai"
+            content-desc="" checkable="false" checked="false" clickable="false" enabled="true"
+            focusable="false" focused="false" scrollable="false" long-clickable="false"
+            password="false" selected="false" bounds="[0,120][540,840]">
+            <node index="0" text="" resource-id="android:id/content"
+                class="android.widget.FrameLayout" package="cn.damai" content-desc=""
+                checkable="false" checked="false" clickable="false" enabled="true" focusable="false"
+                focused="false" scrollable="false" long-clickable="false" password="false"
+                selected="false" bounds="[0,120][540,840]">
+                <node index="0" text="" resource-id="cn.damai:id/damai_root_layout"
+                    class="android.widget.FrameLayout" package="cn.damai" content-desc=""
+                    checkable="false" checked="false" clickable="false" enabled="true"
+                    focusable="false" focused="false" scrollable="false" long-clickable="false"
+                    password="false" selected="false" bounds="[0,120][540,840]">
+                    <node index="0" text="" resource-id="cn.damai:id/damai_dialog_layout"
+                        class="android.widget.LinearLayout" package="cn.damai" content-desc=""
+                        checkable="false" checked="false" clickable="false" enabled="true"
+                        focusable="false" focused="false" scrollable="false" long-clickable="false"
+                        password="false" selected="false" bounds="[0,120][540,840]">
+                        <node index="0" text="" resource-id="cn.damai:id/damai_dialog_content"
+                            class="android.widget.LinearLayout" package="cn.damai" content-desc=""
+                            checkable="false" checked="false" clickable="false" enabled="true"
+                            focusable="false" focused="false" scrollable="false"
+                            long-clickable="false" password="false" selected="false"
+                            bounds="[75,120][465,792]">
+                            <node index="0" text="" resource-id="" class="android.view.View"
+                                package="cn.damai" content-desc="" checkable="false" checked="false"
+                                clickable="false" enabled="true" focusable="false" focused="false"
+                                scrollable="false" long-clickable="false" password="false"
+                                selected="false" bounds="[75,120][465,152]" />
+                            <node index="1" text="温馨提示" resource-id="cn.damai:id/damai_dialog_title"
+                                class="android.widget.TextView" package="cn.damai" content-desc=""
+                                checkable="false" checked="false" clickable="false" enabled="true"
+                                focusable="false" focused="false" scrollable="false"
+                                long-clickable="false" password="false" selected="false"
+                                bounds="[216,166][324,198]" />
+                            <node index="2" text="" resource-id="cn.damai:id/dialog_content_layout"
+                                class="android.widget.LinearLayout" package="cn.damai"
+                                content-desc="" checkable="false" checked="false" clickable="false"
+                                enabled="true" focusable="false" focused="false" scrollable="false"
+                                long-clickable="false" password="false" selected="false"
+                                bounds="[120,212][420,628]">
+                                <node index="0" text=""
+                                    resource-id="cn.damai:id/dialog_content_container2"
+                                    class="android.widget.FrameLayout" package="cn.damai"
+                                    content-desc="" checkable="false" checked="false"
+                                    clickable="false" enabled="true" focusable="false"
+                                    focused="false" scrollable="false" long-clickable="false"
+                                    password="false" selected="false" bounds="[120,212][420,628]">
+                                    <node index="0" text=""
+                                        resource-id="cn.damai:id/dialog_content_container"
+                                        class="android.widget.ScrollView" package="cn.damai"
+                                        content-desc="" checkable="false" checked="false"
+                                        clickable="false" enabled="true" focusable="true"
+                                        focused="false" scrollable="true" long-clickable="false"
+                                        password="false" selected="false"
+                                        bounds="[120,212][420,628]">
+                                        <node index="0"
+                                            text="感谢您信任并使用大麦！使用前请您认真阅读并同意《大麦用户服务协议》《订票服务条款》和《大麦基本功能隐私政策》。大麦基本功能服务为演出购票，根据《常见类型移动互联网应用程序必要个人信息范围规定》，该类服务必要信息包括（1）注册用户电话号码；（2）观演场次、座位号（如有）；（3）支付时间、支付金额、支付渠道等支付信息。您同意《大麦基本功能隐私政策》仅代表同意使用票务服务功能时收集、处理相关必要信息，不代表同意其它功能收集、处理非必要个人信息，其它功能处理个人信息将单独征求您的同意。 您可通过大麦APP“我的-设置-协议规则-大麦基本功能隐私政策”查看上述协议。"
+                                            resource-id="" class="android.widget.TextView"
+                                            package="cn.damai" content-desc="" checkable="false"
+                                            checked="false" clickable="false" enabled="true"
+                                            focusable="true" focused="false" scrollable="false"
+                                            long-clickable="false" password="false" selected="false"
+                                            bounds="[120,212][420,628]" />
+                                    </node>
+                                </node>
+                            </node>
+                            <node index="3" text=""
+                                resource-id="cn.damai:id/dialog_expand_content_container3"
+                                class="android.widget.FrameLayout" package="cn.damai"
+                                content-desc="" checkable="false" checked="false" clickable="false"
+                                enabled="true" focusable="false" focused="false" scrollable="false"
+                                long-clickable="false" password="false" selected="false"
+                                bounds="[75,628][465,792]">
+                                <node index="0" text="" resource-id=""
+                                    class="android.widget.LinearLayout" package="cn.damai"
+                                    content-desc="" checkable="false" checked="false"
+                                    clickable="false" enabled="true" focusable="false"
+                                    focused="false" scrollable="false" long-clickable="false"
+                                    password="false" selected="false" bounds="[75,628][465,792]">
+                                    <node index="0" text="同意"
+                                        resource-id="cn.damai:id/id_boot_action_agree"
+                                        class="android.widget.TextView" package="cn.damai"
+                                        content-desc="" checkable="false" checked="false"
+                                        clickable="true" enabled="true" focusable="true"
+                                        focused="false" scrollable="false" long-clickable="false"
+                                        password="false" selected="false"
+                                        bounds="[120,660][420,720]" />
+                                    <node index="1" text="不同意"
+                                        resource-id="cn.damai:id/id_boot_action_un_agree"
+                                        class="android.widget.TextView" package="cn.damai"
+                                        content-desc="" checkable="false" checked="false"
+                                        clickable="true" enabled="true" focusable="true"
+                                        focused="false" scrollable="false" long-clickable="false"
+                                        password="false" selected="false"
+                                        bounds="[120,720][420,786]" />
+                                </node>
+                            </node>
+                        </node>
+                        <node index="1" text="" resource-id="cn.damai:id/damai_dialog_bottom_space"
+                            class="android.view.View" package="cn.damai" content-desc=""
+                            checkable="false" checked="false" clickable="false" enabled="true"
+                            focusable="false" focused="false" scrollable="false"
+                            long-clickable="false" password="false" selected="false"
+                            bounds="[0,792][540,840]" />
+                    </node>
+                </node>
+            </node>
+        </node>
+    </node>
+</hierarchy>

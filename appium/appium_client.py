@@ -20,6 +20,7 @@ Appium客户端模块，用于管理Appium会话和设备交互。
 from concurrent.futures import ThreadPoolExecutor
 import subprocess
 import time
+import os
 import requests
 from appium_server import AppiumServer
 from appium import webdriver
@@ -53,9 +54,10 @@ class AppiumClient:
     drivers: list = []  # 驱动列表
     app_package: str  # app包名
     app_activity: str  # app启动入口
+    app_apk_path: str  # app apk路径
     appium_server_host: str  # appium server主机地址，默认为本地
     devices_map_appium_server_port: dict = {}  # device与appium server端口映射关系
-    time_for_wait_element:int = 1 # 等待元素出现的时间
+    time_for_wait_element:int = 10 # 等待元素出现的时间
 
     def __init__(
         self,
@@ -108,7 +110,7 @@ class AppiumClient:
 
         # 指定等待元素出现的时间
         if time_for_wait_element:
-            self.time_for_wait_element = time_for_wait_element  
+            self.time_for_wait_element = time_for_wait_element  # 指定等待元素出现的时间
 
     def get_app_package(self) -> str:
         """
@@ -208,8 +210,10 @@ class AppiumClient:
         # 解析设备列表
         for line in result.stdout.splitlines():
             if "\t" in line:
-                device = line.split("\t")[0]
-                if device != "List of devices attached":
+                parts = line.split("\t")
+                device = parts[0]
+                status = parts[1] if len(parts) > 1 else ""
+                if device != "List of devices attached" and status == "device":
                     self.devices.append(device)
         if not self.devices:
             raise ValueError("未找到连接的设备!")
@@ -298,7 +302,7 @@ class AppiumClient:
             )
         return drivers
 
-    def activate_app(self, appn_package: str):
+    def activate_app(self, appn_package: str, app_apk_path: str = None):
         """
         启动app
         args:
@@ -314,7 +318,15 @@ class AppiumClient:
         def _activate_app(driver):
             # 判断应用是否已经安装
             if not driver.is_app_installed(appn_package):
-                raise RuntimeError(f"app[{appn_package}]未安装,启动失败!")
+                if app_apk_path:
+                    # 安装应用
+                    os.system(f"adb -s {driver.capabilities['udid']} install {app_apk_path}")
+                    print(f"app[{appn_package}]已成功安装!")
+                else:
+                    raise ValueError(
+                        f"app[{appn_package}]未安装,请指定app_apk_path参数!"
+                    )
+
             # 启动应用
             driver.activate_app(appn_package)
             print(
@@ -416,8 +428,8 @@ if __name__ == "__main__":
     # 实例化appium client并连接appium server
     appium_client = AppiumClient(appium_server_host="127.0.0.1")
     # # 启动app
-    appium_client.activate_app("cn.damai")
+    appium_client.activate_app("cn.damai", app_apk_path="F:\\damai.apk")
     # 开始对应用进行操作
-    appium_client.process()
+    # appium_client.process()
     # 关闭appium client
     appium_client.close_driver()

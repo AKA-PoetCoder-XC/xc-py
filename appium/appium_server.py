@@ -78,8 +78,10 @@ class AppiumServer:
         # 解析设备列表
         for line in result.stdout.splitlines():
             if "\t" in line:
-                device = line.split("\t")[0]
-                if device != "List of devices attached":
+                parts = line.split("\t")
+                device = parts[0]
+                status = parts[1] if len(parts) > 1 else ""
+                if device != "List of devices attached" and status == "device":
                     self.devices.append(device)
         if not self.devices:
             raise ValueError("未找到连接的设备!")
