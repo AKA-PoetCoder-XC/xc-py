@@ -370,57 +370,191 @@ class AppiumClient:
 
         for driver in self.drivers:
 
-            # 初始化app服务协议点击“同意”
-            start_time = time.time()
-            try:
-                driver.find_elements(
-                    by=AppiumBy.ID, value="cn.damai:id/id_boot_action_agree"
-                )[0].click()
-                print("点击“同意”成功!")
-            except Exception as e:
-                print(f"点击“同意”失败!: {e}")
+            # # 初始化app服务协议点击“同意”
+            # start_time = time.time()
+            # try:
+            #     driver.find_elements(
+            #         by=AppiumBy.ID, value="cn.damai:id/id_boot_action_agree"
+            #     )[0].click()
+            #     print("点击“同意”成功!")
+            # except Exception as e:
+            #     print(f"点击“同意”失败!: {e}")
 
-            # 广告点击跳过
-            start_time = time.time()
-            try:
-                driver.find_elements(by=AppiumBy.ID, value="cn.damai:id/skip")[
-                    0
-                ].click()
-                print(f"广告点击“跳过”耗时: {time.time() - start_time:.2f}秒")
-            except Exception as e:
-                print(f"广告点击“跳过”失败!: {e}")
+            # # 广告点击跳过
+            # start_time = time.time()
+            # try:
+            #     driver.find_elements(by=AppiumBy.ID, value="cn.damai:id/skip")[
+            #         0
+            #     ].click()
+            #     print(f"广告点击“跳过”耗时: {time.time() - start_time:.2f}秒")
+            # except Exception as e:
+            #     print(f"广告点击“跳过”失败!: {e}")
 
-            # 定位底部“我的”元素进行点击
-            start_time = time.time()
-            try:
-                driver.find_elements(by=AppiumBy.ID, value="cn.damai:id/tab_text")[
-                    4
-                ].click()
-                print(f"点击“我的”耗时: {time.time() - start_time:.2f}秒")
-            except Exception as e:
-                print(f"点击“我的”失败!: {e}")
+            # # 定位底部“我的”元素进行点击
+            # self.click_mine(driver)
 
-            # 点击“立即登录"
-            start_time = time.time()
-            try:
-                driver.find_elements(
-                    by=AppiumBy.ID, value="cn.damai:id/mine_center_header_user_name"
-                )[0].click()
-                print(f"点击“立即登录”耗时: {time.time() - start_time:.2f}秒")
-            except Exception as e:
-                print(f"点击“立即登录”失败!: {e}")
+            # # 点击“立即登录"
+            # self.login_now(driver)
 
-            # 手机号登录
-            self.login_by_phone(driver, "18873959885")
-            # 点击“获取验证码”
-            start_time = time.time()
-            try:
-                driver.find_elements(
-                    by=AppiumBy.ID, value="cn.damai:id/aliuser_login_send_smscode_btn"
-                )[0].click()
-                print(f"点击“获取验证码”耗时: {time.time() - start_time:.2f}秒")
-            except Exception as e:
-                print(f"点击“获取验证码”失败!: {e}")
+            # # 勾选阅读并同意协议
+            # self.read_and_accept(driver)
+
+            # # 点击“淘宝登录”
+            # self.login_by_taobao(driver, "18873959885")
+
+            # 打开"想看"列表
+            self.open_want_to_see_list(driver)
+
+            # 点击第一个想看的演出
+            self.click_first_want_to_see_performance(driver)
+
+    def click_first_want_to_see_performance(self, driver):
+        """
+        点击第一个想看的演出
+        args:
+            driver: appium driver
+        return:
+            None
+        author:
+            XieChen
+        date:
+            2025-05-08
+        """
+        start_time = time.time()
+        try:
+            driver.find_elements(AppiumBy.ANDROID_UIAUTOMATOR,('text("购票")'))[0].click()
+            print(f"点击“第一个想看的演出”耗时: {time.time() - start_time:.2f}秒")
+        except Exception as e:
+            print(f"点击“第一个想看的演出”失败!: {e}")
+
+    def open_want_to_see_list(self, driver):
+        """
+        打开“想看”列表
+        args:
+            driver: appium driver
+        return:
+            None
+        author:
+            XieChen
+        date:
+            2025-05-08
+        """
+        start_time = time.time()
+        try:
+            driver.find_elements(by=AppiumBy.ID, value="cn.damai:id/tv_mine_want")[
+                0
+            ].click()
+            print(f"点击“想看”列表耗时: {time.time() - start_time:.2f}秒")
+        except Exception as e:
+            print(f"点击“想看”列表失败!: {e}")
+
+    def click_mine(self, driver):
+        """
+        点击“我的”
+        args:
+            driver: appium driver
+        return:
+            None
+        author:
+            XieChen
+        date:
+            2025-05-08
+        """
+        start_time = time.time()
+        try:
+            driver.find_elements(by=AppiumBy.ID, value="cn.damai:id/tab_text")[
+                4
+            ].click()
+            print(f"点击“我的”耗时: {time.time() - start_time:.2f}秒")
+        except Exception as e:
+            print(f"点击“我的”失败!: {e}")
+
+    def login_now(self, driver):
+        """
+        点击“立即登录”
+        args:
+            driver: appium driver
+        return:
+            None
+        author:
+            XieChen
+        date:
+            2025-05-08
+        """
+        start_time = time.time()
+        try:
+            driver.find_elements(
+                by=AppiumBy.ID, value="cn.damai:id/mine_center_header_user_name"
+            )[0].click()
+            print(f"点击“立即登录”耗时: {time.time() - start_time:.2f}秒")
+        except Exception as e:
+            print(f"点击“立即登录”失败!: {e}")
+
+    def read_and_accept(self, driver):
+        """
+        点击“阅读并同意”
+        args:
+            driver: appium driver
+        return:
+            None
+        author:
+            XieChen
+        date:
+            2025-05-08
+        """
+        start_time = time.time()
+        try:
+            # 点击“阅读并同意”
+            driver.find_elements(by=AppiumBy.ID, value="android.widget.TextView")[
+                0
+            ].click()
+            print(f"点击“阅读并同意”耗时: {time.time() - start_time:.2f}秒")
+        except Exception as e:
+            print(f"点击“阅读并同意”失败!: {e}")
+
+
+    def login_by_taobao(self, driver, phone: str):
+        """
+        淘宝登录
+        args:
+            phone: 手机号
+            driver: appium driver
+        return:
+            None
+        author:
+            XieChen
+        date:
+            2025-05-08
+        """
+        # 点击“淘宝登录”
+        start_time = time.time()
+        try:
+            driver.find_elements(
+                by=AppiumBy.ID, value="cn.damai:id/login_third_tb_btn"
+            )[0].click()
+            print(f"点击“淘宝登录”耗时: {time.time() - start_time:.2f}秒")
+        except Exception as e:
+            print(f"点击“淘宝登录”失败!: {e}")
+        # 点击短信验证码登录
+        start_time = time.time()
+        try:
+            driver.find_elements(
+                by=AppiumBy.ACCESSIBILITY_ID, value="短信验证码登录"
+            )[0].click()
+            print(f"点击“短信验证码登录”耗时: {time.time() - start_time:.2f}秒")
+        except Exception as e:
+            print(f"点击“短信验证码登录”失败!: {e}")
+        # 输入手机号
+        start_time = time.time()
+        try:
+            driver.find_elements(
+                AppiumBy.ANDROID_UIAUTOMATOR, ('text("请输入手机号")')
+            )[0].click()
+            print(f"输入手机号耗时: {time.time() - start_time:.2f}秒")
+        except Exception as e:
+            print(f"输入手机号失败!: {e}")
+        
+
 
     def login_by_phone(self, driver, phone: str):
         """
@@ -454,33 +588,7 @@ class AppiumClient:
             print(f"输入手机号耗时: {time.time() - start_time:.2f}秒")
         except Exception as e:
             print(f"输入手机号失败!: {e}")
-
-    def login_by_taobao(self, driver, phone: str):
-        """
-        淘宝登录
-        args:
-            phone: 手机号
-            driver: appium driver
-        return:
-            None
-        author:
-            XieChen
-        date:
-            2025-05-08
-        """
-        # 点击“淘宝登录”
-        start_time = time.time()
-        try:
-            driver.find_elements(
-                by=AppiumBy.ID, value="cn.damai:id/login_third_tb_btn"
-            )[0].click()
-            print(f"点击“淘宝登录”耗时: {time.time() - start_time:.2f}秒")
-        except Exception as e:
-            print(f"点击“淘宝登录”失败!: {e}")
-        # 获取元素
-        driver.find_elements(
-            by=AppiumBy.ACCESSIBILITY_ID, value="短信验证码登录"
-        )[0].click()
+        
         # # 登录
         # start_time = time.time()
         # try:
@@ -492,28 +600,6 @@ class AppiumClient:
         # except Exception as e:
         #     print(f"输入手机号失败!: {e}")
 
-    def click_read(self, driver):
-        """
-        点击“阅读并同意”
-        args:
-            driver: appium driver
-        return:
-            None
-        author:
-            XieChen
-        date:
-            2025-05-08
-        """
-        start_time = time.time()
-        try:
-            # 点击“阅读并同意”
-            driver.find_elements(by=AppiumBy.ID, value="cn.damai:id/dm_cb_login_pro")[
-                0
-            ].click()
-            print(f"点击“阅读并同意”耗时: {time.time() - start_time:.2f}秒")
-        except Exception as e:
-            print(f"点击“阅读并同意”失败!: {e}")
-
 
 if __name__ == "__main__":
     # 实例化appium client并连接appium server
@@ -522,8 +608,7 @@ if __name__ == "__main__":
     # appium_client.activate_app("cn.damai", app_apk_path="F:\\damai.apk")
     # 开始对应用进行操作
     # appium_client.process()
-
-    appium_client.login_by_taobao(appium_client.drivers[0], "18873959885")
+    # appium_client.login_by_taobao(appium_client.drivers[0], "18873959885")
 
     # 关闭appium client
-    appium_client.close_driver()
+    appium_client.process()
