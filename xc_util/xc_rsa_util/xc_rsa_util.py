@@ -126,3 +126,9 @@ def verify_signature_by_public_key(public_key_pem: str, message: bytes, signatur
     except Exception as e:
         print(f"签名验证失败: {str(e)}")
         return False
+
+if __name__ == '__main__':
+    # 生成RSA公私钥对
+    private_key_pem, public_key_pem = generate_rsa_keys_pcks8()
+    print("私钥:", private_key_pem)
+    print("公钥:", public_key_pem)
